@@ -120,3 +120,12 @@ The following use cases describe the primary interactions between users and the 
 - New performer is added and available for evaluation.
 
 ---
+
+## Use-Case Diagram UML v01
+
+Version 1 of the UML Use Case Diagram that reflects the use cases mentioned from the perspective actors of Adjudicator and Administrator. 
+This will continue to be modified as the project progresses. 
+
+<p align="center">
+  <img src="UseCaseDiagramUMLv01.jpg" width="2000" />
+</p>
