@@ -1,6 +1,12 @@
 # Audition Evaluator Full Stack Site
 
-A lightweight web application for tracking audition performers and scores.
+Concept Description from my project description MD:
+
+The Audition Tracker Evaluator Site is a web-based application designed to modernize and streamline the audition and adjudication process for performing arts programs specifically marching band–related activities. While performer skill levels have continued to rise, the tools used by adjudicators have largely remained inefficient and outdated (e.g., spreadsheets and manual data entry).
+
+This project aims to replace those workflows with a focused, easy-to-use platform that allows instructors and adjudicators to quickly view, edit, and track performer information and scores in real time.
+
+I am going to be building this project using a full-stack approach with an appropriate data layer captured on a site made with HTML/CSS and Javascript, APIs captured with a backend server managed in Python, and a lightweight database for the data storage layer written in PostgreSQL. The current diagram for this project is linked below. 
 
 ## Architecture Diagram v01
 
