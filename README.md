@@ -8,6 +8,22 @@ This project aims to replace those workflows with a focused, easy-to-use platfor
 
 I am going to be building this project using a full-stack approach with an appropriate data layer captured on a site made with HTML/CSS and Javascript, APIs captured with a backend server managed in Python, and a lightweight database for the data storage layer written in PostgreSQL. The current diagram for this project is linked below. 
 
+## Table of Contents
+
+- [Audition Evaluator Full Stack Site](#audition-evaluator-full-stack-site)
+  - [Concept Description](#concept-description)
+  - [Architecture Diagram v01](#architecture-diagram-v01)
+  - [Wireframe Version v01](#wireframe-version-v01)
+  - [User Stories](#user-stories)
+  - [Use Cases](#use-cases)
+    - [UC-01: View Performer Roster](#uc-01-view-performer-roster)
+    - [UC-02: Filter and Search Performers](#uc-02-filter-and-search-performers)
+    - [UC-03: Update or Delete Performer Records](#uc-03-update-or-delete-performer-records)
+    - [UC-04: Create or Update Performer Scores](#uc-04-create-or-update-performer-scores)
+    - [UC-05: Add a Late-Registered Performer](#uc-05-add-a-late-registered-performer)
+  - [Use-Case Diagram UML v01](#use-case-diagram-uml-v01)
+
+
 ## Architecture Diagram v01
 
 The first architectural diagram of the site that will continue to be modified.
