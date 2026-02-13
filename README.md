@@ -12,6 +12,7 @@ I am going to be building this project using a full-stack approach with an appro
 
 - [Audition Evaluator Full Stack Site](#audition-evaluator-full-stack-site)
   - [Concept Description](#concept-description)
+  - [System Requirements](#system-requirements)
   - [Architecture Diagram v01](#architecture-diagram-v01)
   - [Wireframe Version v01](#wireframe-version-v01)
   - [User Stories](#user-stories)
@@ -22,6 +23,21 @@ I am going to be building this project using a full-stack approach with an appro
     - [UC-04: Create or Update Performer Scores](#uc-04-create-or-update-performer-scores)
     - [UC-05: Add a Late-Registered Performer](#uc-05-add-a-late-registered-performer)
   - [Use-Case Diagram UML v01](#use-case-diagram-uml-v01)
+
+
+---
+
+## System Requirements
+
+The following requirements define the core functional behavior of the Audition Evaluator system.
+
+| ID | Requirement |
+|----|------------|
+| R1 | The system shall retrieve and display all registered performers from the PostgreSQL database when a `GET /performers` request is received. |
+| R2 | The system shall allow filtering of performers by name, section, and age using query parameters on the `GET /performers` endpoint. |
+| R3 | The system shall create and store a new performer record in the database when valid data is submitted to the `POST /performers` endpoint. |
+| R4 | The system shall create and associate a performance score with a valid performer ID when a request is submitted to the `POST /scores` endpoint. |
+| R5 | The system shall validate incoming API request data and return an appropriate HTTP error response if required fields are missing or invalid. |
 
 
 ## Architecture Diagram v01
