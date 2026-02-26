@@ -14,6 +14,8 @@ I am going to be building this project using a full-stack approach with an appro
   - [Concept Description](#concept-description)
   - [System Requirements](#system-requirements)
   - [Architecture Diagram v01](#architecture-diagram-v01)
+  - [Chen Notation ERD](#chen-notation-erd)
+  - [UML Class Diagram](#uml-class-diagram)
   - [Wireframe Version v01](#wireframe-version-v01)
   - [User Stories](#user-stories)
   - [Use Cases](#use-cases)
@@ -46,6 +48,24 @@ The first architectural diagram of the site that will continue to be modified.
 <p align="center">
   <img src="ArchitectureDiagramv01.jpg" width="2400" />
 </p>
+
+
+## Chen Notation ERD
+
+The first version of the Entity Relationship Diagram the Database will be based off of.
+<p align="center">
+  <img src="AuditionEvaluatorERD.jpeg" width="2400" />
+</p>
+
+
+## UML Class Diagram
+
+This UML Class Diagram represents the object oriented structure that the system would use based off of **_pythonically_** using the entities, attributes, and relationships from the ERD above. 
+<p align="center">
+  <img src="AuditionEvaluatorUMLClass.png" width="2400" />
+</p>
+
+
 
 
 ## Wireframe Version v01 
