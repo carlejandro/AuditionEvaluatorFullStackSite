@@ -2,7 +2,7 @@
 
 ## Ready for Review
 
-This folder contains an early prototype for the Audition Evaluator User.  
+This folder contains an early prototype for a couple of the user stories of the Audition Evaluator project.  
 The purpose of this prototype is to communicate the intended interface and workflow, not to provide full functionality.
 Keep in mind, I'm definitely going to be making this in React.JS and establishing everything within an Asynchronous gateway to allow connectivity between the user facing site and the database. 
 I plan on using this mockup as well as my initial wireframe mainly for when I get stuck and need a reminder of visually what the users experience has to look like. Below you will find the overview of the user stories I selected to mock this prototype with, as well as
