@@ -48,4 +48,4 @@ This prototype includes two main screens:
 - `styles.css` — main prototype mockup
 ## How to View
 
-Open `index.html` in a web browser to review the prototype.
+Open `prototype.html` in a web browser to review the prototype.
