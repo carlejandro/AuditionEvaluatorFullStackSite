@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Audition Evaluator Prototype</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Audition Evaluator Prototype</h1>
+    <p>Prototype focus: performer list, search/filter, and performer detail view</p>
+  </header>
+
+  <main>
+    <div class="notice">
+      <strong>Prototype note:</strong> This is a visual mockup only. Buttons, filters, and navigation are not functional.
+    </div>
+
+    <section class="screen">
+      <div class="screen-label">Screen 1</div>
+      <h2>Registered Performers</h2>
+      <p>This screen supports the user stories where an adjudicator needs to view all performers and quickly search or filter them.</p>
+
+      <div class="toolbar">
+        <input class="field" type="text" value="Search by performer name..." readonly>
+        <input class="field" type="text" value="Section: Snare" readonly>
+        <input class="field" type="text" value="Age: 18-21" readonly>
+        <button class="button">Apply Filters</button>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Performer ID</th>
+            <th>Name</th>
+            <th>Section</th>
+            <th>Age</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>P-1024</td>
+            <td>Jordan Mitchell</td>
+            <td>Snare</td>
+            <td>19</td>
+            <td><span class="tag">Ready for Review</span></td>
+            <td>View Profile</td>
+          </tr>
+          <tr>
+            <td>P-1031</td>
+            <td>Elena Cruz</td>
+            <td>Snare</td>
+            <td>20</td>
+            <td><span class="tag">Scored</span></td>
+            <td>View Profile</td>
+          </tr>
+          <tr>
+            <td>P-1040</td>
+            <td>Marcus Lee</td>
+            <td>Tenors</td>
+            <td>18</td>
+            <td><span class="tag">Ready for Review</span></td>
+            <td>View Profile</td>
+          </tr>
+          <tr>
+            <td>P-1046</td>
+            <td>Ava Thompson</td>
+            <td>Bass Drum</td>
+            <td>21</td>
+            <td><span class="tag">Scored</span></td>
+            <td>View Profile</td>
+          </tr>
+          <tr>
+            <td>P-1053</td>
+            <td>Diego Ramirez</td>
+            <td>Cymbals</td>
+            <td>22</td>
+            <td><span class="tag">Ready for Review</span></td>
+            <td>View Profile</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="screen">
+      <div class="screen-label">Screen 2</div>
+      <h2>Performer Detail Profile</h2>
+      <p>This screen shows the selected performer’s key information and recent scoring details so the adjudicator can review before entering or updating a score.</p>
+
+      <div class="profile-grid">
+        <div class="card">
+          <h3>Jordan Mitchell</h3>
+          <div class="meta">
+            <div><strong>Performer ID:</strong><br>P-1024</div>
+            <div><strong>Section:</strong><br>Snare</div>
+            <div><strong>Age:</strong><br>19</div>
+            <div><strong>School:</strong><br>Northview High</div>
+          </div>
+
+          <div class="actions">
+            <button class="button">Enter Score</button>
+            <button class="button secondary">Back to Performer List</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Score Summary</h3>
+          <ul class="score-list">
+            <li><span>Technique</span><strong>8.5 / 10</strong></li>
+            <li><span>Timing Accuracy</span><strong>9.0 / 10</strong></li>
+            <li><span>Musicality</span><strong>8.0 / 10</strong></li>
+            <li><span>Overall Impression</span><strong>8.8 / 10</strong></li>
+            <li><span>Final Total</span><strong>34.3 / 40</strong></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Audition Evaluator Prototype. All rights reserved. 
+            Will add more stuff eventually like scoring, addition and deletion of students as it corresponds to API request and ERD, 
+            but use this mock as example of what end user should see. </p>
+    </footer>
+  </main>
+</body>
+</html>
