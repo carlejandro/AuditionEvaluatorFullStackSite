@@ -29,6 +29,11 @@ This prototype includes two main screens:
    - Displays a selected performer’s information
    - Shows sample scoring categories and totals
    - Includes mock buttons for actions such as entering a score or returning to the performer list
+  
+## Prototype HTML Image View
+<p align="center">
+  <img src="PrototypeImage.png" width="2400" />
+</p>
 
 ## Notes
 
