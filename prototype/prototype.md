@@ -44,8 +44,8 @@ This prototype includes two main screens:
 
 ## Files
 
-- `prototype.html` — main prototype mockup
-- `styles.css` — main prototype mockup
+- `prototype.html`  main prototype mockup
+- `styles.css`  main prototype mockup
 ## How to View
 
 Open `prototype.html` in a web browser to review the prototype.
