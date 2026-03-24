@@ -16,6 +16,7 @@ I am going to be building this project using a full-stack approach with an appro
   - [Architecture Diagram v01](#architecture-diagram-v01)
   - [Chen Notation ERD](#chen-notation-erd)
   - [UML Class Diagram](#uml-class-diagram)
+  - [Data Access Layer V1.0](#data-access-layer-v10)
   - [Wireframe Version v01](#wireframe-version-v01)
   - [User Stories](#user-stories)
   - [Use Cases](#use-cases)
@@ -66,6 +67,21 @@ This UML Class Diagram represents the object oriented structure that the system 
 </p>
 
 
+## Data Access Layer V1.0
+Below you will find the first data access layer implementation of our UML class model in Python connecting to our Postgres session, modeling our Performer table.
+<p align="center">
+  <img src="performermodel.png" width="2400" />
+</p>
+
+Along with this below is the http request response that is received from the server after sending the HTTP GET request to our performers API Endpoint.
+<p align="center">
+  <img src="httpresponse.png" width="2400" />
+</p>
+
+Here is also a look at what the data access looks like on Postgres 18.2 so you have an idea of the Source the API is pulling from. I created and seeded the database using SQL alchemy in the backend/postgres directory.
+<p align="center">
+  <img src="pgdb.png" width="2400" />
+</p>
 
 
 ## Wireframe Version v01 
