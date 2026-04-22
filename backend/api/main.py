@@ -8,6 +8,7 @@ match the shape of the data we want to send to the UI and what we defined in the
 
 
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 from typing import List
@@ -17,6 +18,13 @@ from postgres.models import Performer, Section
 from api.schemas import PerformerResponse, SectionResponse
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://127.0.0.1:5501", "http://localhost:5501"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def read_root():
@@ -60,3 +68,4 @@ def get_sections():
         raise HTTPException(status_code=500, detail="An error occurred while fetching sections.")
     finally:
         db.close()
+

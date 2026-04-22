@@ -7,7 +7,14 @@ from pydantic import BaseModel, ConfigDict
 """
 
 # The attribute names HAVE TO MATCH whats in the Postgres DB 
+# The pipeline will look like this --> SQLAlchemy objects returned from the database query --> converted to Pydantic models using the from_attributes config --> then sent to the UI in JSON format. This is critical for the UI to be able to read and display the data correctly. 
+# The UI will read the json data retrieved via the API endpoints via javascript fetch calls and then use that data to populate the UI with the performers 
+# This will be reversed for post data calls
 
+
+
+
+# ----------- GET REQUEST MODELS ----------- #
 class PerformerResponse(BaseModel):
     performer_id: int
     first_name: str
@@ -26,3 +33,15 @@ class SectionResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
+
+
+
+# ----------- POST REQUEST MODELS ----------- #
+# these will be represented as dated retrieved from the UI that is sent TO the API when creating a new score for a performer. The API will then take this data and insert it into the database as a new score record linked to the respective performer via the performer_id foreign key. 
+# This is critical for allowing the UI to submit new scores for performers and have that data persist in the database.
+class ScoreCreate(BaseModel):
+    performance_score: float
+    timing_score: float
+    rhythm_score: float
+    total_score: float
+    comments: str | None = None
