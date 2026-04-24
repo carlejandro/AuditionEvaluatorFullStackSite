@@ -14,13 +14,13 @@ from sqlalchemy.orm import Session
 from typing import List
 
 from postgres.database import SessionLocal
-from postgres.models import Performer, Section
-from api.schemas import PerformerResponse, SectionResponse
+from postgres.models import Performer, Section, Score
+from api.schemas import PerformerResponse, SectionResponse, ScoreCreate
 
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://127.0.0.1:5501", "http://localhost:5501"],
+    allow_origins=["*"], # Allow all origins to access this API for local development. 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -69,3 +69,47 @@ def get_sections():
     finally:
         db.close()
 
+
+
+### --- POST ROUTES --- ###
+@app.post("/performers/{performer_id}/scores")
+def create_score(performer_id: int, score_data: ScoreCreate):
+    db: Session = SessionLocal() # The current postgres instance
+
+    try:
+        performer = db.get(Performer, performer_id)
+
+        if not performer:
+            raise HTTPException(status_code=404, detail="Performer not found")
+
+        #This is a sql_alchemy object that is being created using pydantic validated data from the request body
+        new_score = Score(
+            performance_score=score_data.performance_score,
+            timing_score=score_data.timing_score,
+            rhythm_score=score_data.rhythm_score,
+            total_score=score_data.total_score,
+            comments=score_data.comments,
+            performer_id=performer_id
+        )
+
+        db.add(new_score)
+        db.commit()
+        db.refresh(new_score)
+
+
+        # To check query the scored id in the http 200 response in the PG instance 
+        return {
+            "message": "Score saved successfully",
+            "score_id": new_score.score_id
+        }
+
+    except HTTPException:
+        raise
+
+    except Exception as pgerror:
+        db.rollback()
+        print(f"Error saving score: {pgerror}")
+        raise HTTPException(status_code=500, detail="An error occurred while saving the score.")
+
+    finally:
+        db.close()
