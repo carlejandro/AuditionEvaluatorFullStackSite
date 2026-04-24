@@ -90,7 +90,7 @@ function renderPerformerDetail(performer) {
                 <span class="detail-label">Total Score:</span>
                 <span id="total-score">0</span>
             </div>
-
+            <div id="score-message" class="score-message"></div>
             <button id="apply-scores-btn">Apply Scores</button>
         </div>
     `;
@@ -151,16 +151,24 @@ async function saveScore() {
         },
         body: JSON.stringify(payload)
     });
-
+    // Score button message div to display success or failure
+    const messageDiv = document.getElementById("score-message");
+    
+    
     if (!res.ok) {
-        const error = await res.json();
-        console.error("Error saving score:", error);
-        alert("Error saving score.");
-        return;
+        if (messageDiv) {
+            messageDiv.textContent = `Error saving score: ${res.statusText}`;
+            messageDiv.style.color = "red";
+        }
+        return; // Exit the function if response is not ok to avoid trying to parse JSON from an error response.
     }
 
     const result = await res.json();
-    alert(`Score saved successfully! Score ID: ${result.score_id}`);
+     
+    if (messageDiv) {
+        messageDiv.textContent = `Score saved successfully! (ID: ${result.score_id})`;
+        messageDiv.style.color = "green";
+    }
 }
 
 function setupApplyScoresButton() {
