@@ -1,5 +1,6 @@
 const API_BASE = "http://127.0.0.1:8000";
 
+let selectedPerformerId = null;
 let sectionsMap = {};
 
 // Fetch sections and build lookup map
@@ -49,6 +50,7 @@ function renderPerformers(performers) {
 
 // Fetch one performer
 async function loadPerformerDetail(id) {
+    selectedPerformerId = id;
     const res = await fetch(`${API_BASE}/performers/${id}`);
     const performer = await res.json();
 
@@ -88,12 +90,13 @@ function renderPerformerDetail(performer) {
                 <span class="detail-label">Total Score:</span>
                 <span id="total-score">0</span>
             </div>
-
+            <div id="score-message" class="score-message"></div>
             <button id="apply-scores-btn">Apply Scores</button>
         </div>
     `;
 
     setupScoreCalculation();
+    setupApplyScoresButton();
 
 }
 
@@ -101,7 +104,6 @@ function renderPerformerDetail(performer) {
 // sets up score calculation logic, look at UML For reference
 function setupScoreCalculation() {
     // These correspond to the UML class diagram attributes for the scores. They allow the user to input scores for performance, timing, and rhythm, and then calculate the total score by summing these three values. The total score is displayed in real-time as the user inputs the individual scores.
-    
     const performanceInput = document.getElementById("performance-score");
     const timingInput = document.getElementById("timing-score");
     const rhythmInput = document.getElementById("rhythm-score");
@@ -119,6 +121,63 @@ function setupScoreCalculation() {
     performanceInput.addEventListener("input", updateTotal);
     timingInput.addEventListener("input", updateTotal);
     rhythmInput.addEventListener("input", updateTotal);
+}
+
+// async function to save the score for the selected performer. It first checks if a performer is selected, then it gathers the individual scores from the input fields, calculates the total score, and constructs a payload object to send to the backend API.
+async function saveScore() {
+    if (!selectedPerformerId) {
+        alert("Please select a performer first.");
+        return;
+    }
+
+    const performanceScore = Number(document.getElementById("performance-score").value) || 0;
+    const timingScore = Number(document.getElementById("timing-score").value) || 0;
+    const rhythmScore = Number(document.getElementById("rhythm-score").value) || 0;
+    const totalScore = performanceScore + timingScore + rhythmScore;
+
+    const payload = {
+        performance_score: performanceScore,
+        timing_score: timingScore,
+        rhythm_score: rhythmScore,
+        total_score: totalScore,
+        comments: null
+    };
+
+    // The posst request to the backend API to save the score for selected performer.
+    const res = await fetch(`${API_BASE}/performers/${selectedPerformerId}/scores`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    });
+    // Score button message div to display success or failure
+    const messageDiv = document.getElementById("score-message");
+    
+    
+    if (!res.ok) {
+        if (messageDiv) {
+            messageDiv.textContent = `Error saving score: ${res.statusText}`;
+            messageDiv.style.color = "red";
+        }
+        return; // Exit the function if response is not ok to avoid trying to parse JSON from an error response.
+    }
+
+    const result = await res.json();
+     
+    if (messageDiv) {
+        messageDiv.textContent = `Score saved successfully! (ID: ${result.score_id})`;
+        messageDiv.style.color = "green";
+    }
+}
+
+function setupApplyScoresButton() {
+    const button = document.getElementById("apply-scores-btn");
+    if (!button) {
+        console.error("Apply Scores button not found");
+        return;
+    }
+    button.addEventListener("click", saveScore); // Attaching save score function to the click action on the button
 }
 
 // Initialize page
