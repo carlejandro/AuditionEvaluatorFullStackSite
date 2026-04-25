@@ -137,3 +137,125 @@ h1 {
 #apply-scores-btn:hover {
     background-color: #3a3aff;
 }
+
+.app-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.sidebar input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border: 1px solid #bfc7f0;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.sidebar label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #2a2a9a;
+}
+
+.helper-text {
+    color: #666;
+    font-size: 13px;
+}
+
+/* Performer box */
+
+.add-performer-box {
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #d6dbf5;
+}
+
+.add-performer-box h3 {
+    margin-top: 0;
+    color: #2a2a9a;
+}
+
+.add-performer-box input,
+.add-performer-box select {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    padding: 10px 12px;
+    border: 1px solid #bfc7f0;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+#add-performer-btn {
+    width: 100%;
+    padding: 11px;
+    border: none;
+    border-radius: 8px;
+    background-color: #00a85a;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#add-performer-btn:hover {
+    background-color: #008f4d;
+}
+
+
+/* Hide performer box until user clicks it */
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#toggle-add-performer-btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #00a85a;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+
+/*  */
+.performer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.status-scored {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.status-pending {
+    background-color: #fef3c7;
+    color: #92400e;
+}
