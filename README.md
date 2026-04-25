@@ -8,6 +8,14 @@ This project aims to replace those workflows with a focused, easy-to-use platfor
 
 I am going to be building this project using a full-stack approach with an appropriate data layer captured on a site made with HTML/CSS and Javascript, APIs captured with a backend server managed in Python, and a lightweight database for the data storage layer written in PostgreSQL. The current diagram for this project is linked below. 
 
+**HOW TO EXECUTE THE APPLICATION LOCALLY**
+1. Clone the GIT Repository
+2. Ensure you have a working instance of postgress
+3. Change the DATABASE URL variable to your connection string matching your empty postgres database
+4. Seed your postgresql db instance by running the seed_data.py module via command line --> python -m seed_data.py
+5. run the FastAPI ASGI/API Gateway server by executing this line in command line --> uvicorn api.main:app --reload
+6. Run the index.html page in the frontend section. Thats it!
+
 ## Table of Contents
 
 - [Audition Evaluator Full Stack Site](#audition-evaluator-full-stack-site)
