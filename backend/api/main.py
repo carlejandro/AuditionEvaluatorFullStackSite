@@ -9,7 +9,7 @@ match the shape of the data we want to send to the UI and what we defined in the
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy import select
+from sqlalchemy import select, delete
 from sqlalchemy.orm import Session
 from typing import List
 
@@ -182,6 +182,42 @@ def create_performer(performer_data: PerformerCreate):
         db.rollback()
         print(f"Error creating performer: {pgerror}")
         raise HTTPException(status_code=500, detail="An error occurred while creating performer.")
+
+    finally:
+        db.close()
+
+
+# -- DELETE ROUTES -- #
+
+
+@app.delete("/performers/{performer_id}")
+def delete_performer(performer_id: int):
+    db: Session = SessionLocal()
+
+    try:
+        performer = db.get(Performer, performer_id)
+
+        if not performer:
+            raise HTTPException(status_code=404, detail="Performer not found")
+
+        # Delete child score rows first. YOU NEED TO DO THIS OR YOU WILL GET A SCORE NOT NULL CONSTRAINT ERROR
+        db.execute(
+            delete(Score).where(Score.performer_id == performer_id)
+        )
+
+        # Then delete the performer
+        db.delete(performer)
+        db.commit()
+
+        return {"message": "Performer deleted successfully"}
+
+    except HTTPException:
+        raise
+
+    except Exception as pgerror:
+        db.rollback()
+        print(f"Error deleting performer: {pgerror}")
+        raise HTTPException(status_code=500, detail="An error occurred while deleting performer.")
 
     finally:
         db.close()

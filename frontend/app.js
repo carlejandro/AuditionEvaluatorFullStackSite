@@ -73,16 +73,15 @@ function renderPerformers(performers) {
         performerDiv.innerHTML = `
             <div class="performer-row">
                 <div>
-                    <span class="performer-name">
-                        ${performer.first_name} ${performer.last_name}
-                    </span>
-                    <span>
-                        - ${sectionsMap[performer.section_id] ?? "Unknown Section"}
-                    </span>
+                    <span class="performer-name">${performer.first_name} ${performer.last_name}</span>
+                    <span>- ${sectionsMap[performer.section_id] ?? "Unknown Section"}</span>
                 </div>
-                <span class="status-badge ${statusClass}">
-                    ${statusText}
-                </span>
+
+                <div>
+                    <span class="status-badge ${statusClass}">${statusText}</span>
+                    <button class="delete-btn" onclick="deletePerformer(${performer.performer_id})">
+                    Delete
+                    </button>
             </div>
         `;
 
@@ -256,6 +255,33 @@ async function addPerformer() {
     document.getElementById("add-performer-form").classList.add("hidden");
     document.getElementById("toggle-add-performer-btn").textContent = "+ Add Performer";
 }
+
+
+// DELETE FUNCTIONS // 
+async function deletePerformer(performerId) {
+    const confirmDelete = confirm("Are you sure you want to delete this performer?");
+    if (!confirmDelete) return;
+
+    const res = await fetch(`${API_BASE}/performers/${performerId}`, {
+        method: "DELETE"
+    });
+
+    if (!res.ok) {
+        alert("Failed to delete performer");
+        return;
+    }
+
+    // refresh UI
+    await loadPerformers();
+    await loadScoreStatus();
+
+    // clear right panel if needed
+    const detail = document.getElementById("performer-detail");
+    if (detail) {
+        detail.innerHTML = "<p>Select a performer</p>";
+    }
+}
+
 
 // SETUP FUNCTIONS //
 
