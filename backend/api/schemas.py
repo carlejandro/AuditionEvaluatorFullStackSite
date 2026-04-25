@@ -33,7 +33,9 @@ class SectionResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
-
+class PerformerScoreStatusResponse(BaseModel):
+    performer_id: int
+    has_score: bool
 
 
 # ----------- POST REQUEST MODELS ----------- #
@@ -45,3 +47,12 @@ class ScoreCreate(BaseModel):
     rhythm_score: float
     total_score: float
     comments: str | None = None
+
+
+
+class PerformerCreate(BaseModel):
+    first_name: str
+    last_name: str
+    age: int
+    email: str
+    section_id: int

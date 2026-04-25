@@ -1,24 +1,64 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
     <title>Audition Tracker</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <div class="page-container">
         <h1>Audition Tracker</h1>
 
-        <div class="main-layout">
-            <div class="panel">
-                <h2>Performers</h2>
-                <div id="performer-list"></div>
-            </div>
+        <div class="app-layout">
+            <aside class="sidebar">
+                <div class="panel">
+                    <h2>Adjudicator</h2>
 
-            <div class="panel" id="performer-detail">
-                <h2>Selected Performer</h2>
-                <p>Click a performer to view details</p>
-            </div>
+                    <label for="adjudicator-name">Your Name</label>
+                    <input type="text" id="adjudicator-name" placeholder="Enter your name...">
+
+                    <p class="helper-text">Required to save scores later</p>
+                </div>
+
+                <div class="panel">
+                    <h2>Progress</h2>
+
+                    <p><span class="detail-label">Total:</span> <span id="total-count">0</span></p>
+                    <p><span class="detail-label">Scored:</span> <span id="scored-count">0</span></p>
+                    <p><span class="detail-label">Pending:</span> <span id="pending-count">0</span></p>
+                </div>
+            </aside>
+
+            <main class="main-layout">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2>Performers</h2>
+                        <button id="toggle-add-performer-btn">+ Add Performer</button>
+                    </div>
+
+                    <div class="add-performer-box hidden" id="add-performer-form">
+                        <h3>Add Performer</h3>
+
+                        <input type="text" id="new-first-name" placeholder="First name">
+                        <input type="text" id="new-last-name" placeholder="Last name">
+                        <input type="number" id="new-age" placeholder="Age">
+                        <input type="email" id="new-email" placeholder="Email">
+
+                        <select id="new-section">
+                            <option value="">Select section</option>
+                        </select>
+
+                        <button id="add-performer-btn">Save Performer</button>
+                    </div>
+
+                    <div id="performer-list"></div>
+                </div>
+
+                <div class="panel" id="performer-detail">
+                    <h2>Selected Performer</h2>
+                    <p>Click a performer to view details</p>
+                </div>
+            </main>
         </div>
     </div>
 

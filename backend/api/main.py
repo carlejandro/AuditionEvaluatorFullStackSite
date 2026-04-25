@@ -9,13 +9,13 @@ match the shape of the data we want to send to the UI and what we defined in the
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy import select
+from sqlalchemy import select, delete
 from sqlalchemy.orm import Session
 from typing import List
 
 from postgres.database import SessionLocal
 from postgres.models import Performer, Section, Score
-from api.schemas import PerformerResponse, SectionResponse, ScoreCreate
+from api.schemas import PerformerResponse, SectionResponse, ScoreCreate, PerformerCreate, PerformerScoreStatusResponse
 
 app = FastAPI()
 app.add_middleware(
@@ -26,6 +26,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# ---- GET ROUTES ---- #
 @app.get("/")
 def read_root():
     return {"message": "Audition evaluation API is running!"}
@@ -70,6 +71,41 @@ def get_sections():
         db.close()
 
 
+# This endpoint checks if each performer has an associated score in the database and returns a list of performer IDs along with a boolean indicating whether they have a score or not. This is critical for the UI to determine which performers have been scored and which have not, allowing it to display that information accordingly.
+@app.get("/performer-score-status", response_model=List[PerformerScoreStatusResponse])
+def get_performer_score_status():
+    db: Session = SessionLocal()
+
+    try:
+        performers = db.execute(select(Performer)).scalars().all()
+
+        status_list = []
+
+        for performer in performers:
+            score = db.execute(
+                select(Score)
+                .where(Score.performer_id == performer.performer_id)
+                .limit(1)
+            ).scalar_one_or_none()
+
+            status_list.append({
+                "performer_id": performer.performer_id,
+                "has_score": score is not None
+            })
+
+        return status_list
+
+    except Exception as pgerror:
+        print(f"Error fetching performer score status: {pgerror}")
+        raise HTTPException(status_code=500, detail="An error occurred while fetching score status.")
+
+    finally:
+        db.close()
+
+
+
+
+
 
 ### --- POST ROUTES --- ###
 @app.post("/performers/{performer_id}/scores")
@@ -110,6 +146,78 @@ def create_score(performer_id: int, score_data: ScoreCreate):
         db.rollback()
         print(f"Error saving score: {pgerror}")
         raise HTTPException(status_code=500, detail="An error occurred while saving the score.")
+
+    finally:
+        db.close()
+
+# pretty much same logic as the create_score endpoint but for creating a new performer instead of a score. This is critical for allowing the UI to submit new performers and have that data persist in the database.
+@app.post("/performers", response_model=PerformerResponse) # include the performer response pydantic model 
+def create_performer(performer_data: PerformerCreate):
+    db: Session = SessionLocal()
+
+    try:
+        section = db.get(Section, performer_data.section_id)
+
+        if not section:
+            raise HTTPException(status_code=404, detail="Section not found")
+
+        new_performer = Performer(
+            first_name=performer_data.first_name,
+            last_name=performer_data.last_name,
+            age=performer_data.age,
+            email=performer_data.email,
+            section_id=performer_data.section_id
+        )
+
+        db.add(new_performer)
+        db.commit()
+        db.refresh(new_performer)
+
+        return new_performer
+
+    except HTTPException:
+        raise
+
+    except Exception as pgerror:
+        db.rollback()
+        print(f"Error creating performer: {pgerror}")
+        raise HTTPException(status_code=500, detail="An error occurred while creating performer.")
+
+    finally:
+        db.close()
+
+
+# -- DELETE ROUTES -- #
+
+
+@app.delete("/performers/{performer_id}")
+def delete_performer(performer_id: int):
+    db: Session = SessionLocal()
+
+    try:
+        performer = db.get(Performer, performer_id)
+
+        if not performer:
+            raise HTTPException(status_code=404, detail="Performer not found")
+
+        # Delete child score rows first. YOU NEED TO DO THIS OR YOU WILL GET A SCORE NOT NULL CONSTRAINT ERROR
+        db.execute(
+            delete(Score).where(Score.performer_id == performer_id)
+        )
+
+        # Then delete the performer
+        db.delete(performer)
+        db.commit()
+
+        return {"message": "Performer deleted successfully"}
+
+    except HTTPException:
+        raise
+
+    except Exception as pgerror:
+        db.rollback()
+        print(f"Error deleting performer: {pgerror}")
+        raise HTTPException(status_code=500, detail="An error occurred while deleting performer.")
 
     finally:
         db.close()
